@@ -1,10 +1,10 @@
-# Author:   Arturo Aguilar Lagunas
 # Purpose:  Download photos from https://www.pexels.com/
 from pexels_api import API
 from pexels_user import API_KEY
 import requests
 import sys
 import os
+from time import sleep
 # Get args
 args_boundary = (2,12)
 required_args_boundary = (2,3)
@@ -156,6 +156,9 @@ while True:
             else:
                 print("Downloading: {}/{}".format(photos, total_photos))
         photo_path = os.path.join(dir, filename)
+        if os.path.exists(photo_path):
+            print("skipping", photo_path)
+            break
         with open(photo_path, "wb") as f:
             try:
                 f.write(requests.get(download_url, timeout=15).content)
@@ -167,7 +170,9 @@ while True:
                     if options["-o"]:
                         if not os.listdir(os.path.split(dir)[0]):
                             os.rmdir(os.path.split(dir)[0])
-                break_loop = True
+                break_loop = False
+                print("sleeping for 30...")
+                sleep(30)
                 break
         if photos == total_photos:
             break_loop = True
