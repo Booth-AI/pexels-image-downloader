@@ -1,0 +1,6 @@
+*.jpg
+*.png
+*.webp
+*.jpeg
+*.DS_Store
+*__pycache__
